@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash -x 
 
 rand1=$(( 100 + RANDOM%999 ))
 rand2=$(( 100 + RANDOM%999 ))
@@ -12,19 +12,23 @@ rand9=$(( 100 + RANDOM%999 ))
 rand10=$(( 100 + RANDOM%999 ))
 
 numbers=($rand1 $rand2 $rand3 $rand4 $rand5 $rand6 $rand7 $rand8 $rand9 $rand10)
-max=${numbers[0]}
-min=${numbers[0]}
+max=${numbers[0]} 
+min=${numbers[0]} 
 
-for i in "${numbers[@]}"
+secondLargest='unset'
+secondSmallest='unset'
+
+for (( i=1; i<${#numbers[@]}; i++ ))
 do
-	if [[ "$i" -gt "$max" ]]
+	if [[ ${numbers[i]} > $max ]]
 	then
-		max="$i"
-	fi
-	if [[ "$i" -lt "$min" ]]
+		secondLargest=$max
+		max=${numbers[i]}
+	elif (( ${numbers[i]} != $max )) && { [[ "$secondLargest"="unset" ]] || [[ ${numbers[i]} > $secondLearest ]]; }
 	then
-		min="$i"
+		secondLargest=${numers[i]}
 	fi
 done
-echo "Max is $max"
+
+echo "Max is $secondLargest"
 echo "Min is $min"
